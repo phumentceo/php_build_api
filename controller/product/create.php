@@ -5,6 +5,7 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");  
 header("Access-Control-Allow-Methods:POST");   
 
+
 $method = $_SERVER['REQUEST_METHOD'];  
 
 if ($method === 'POST') { 
@@ -15,6 +16,7 @@ if ($method === 'POST') {
     $name = '';
     $price = '';
     $qty   = '';
+    $imageStore = '';
 
     if (strpos($contentType, 'application/json') !== false) {
         // If Content-Type is JSON, decode the JSON payload
@@ -31,22 +33,29 @@ if ($method === 'POST') {
         $price = $_POST['price'] ?? '';
         $qty = $_POST['quantity'] ?? '';
 
-        $image = $_FILES['image']['name'];
-        //move to the directory
 
-        $imageName = rand(0,999999999) .'.'. pathinfo($image,PATHINFO_EXTENSION);
+        if(isset($_FILES['image'])){
 
+            $image = $_FILES['image']['name'];
+            //move to the directory
 
-        //move directory
-        $target_file = "../../public/$imageName";
+            $imageName = rand(0,999999999) .'.'. pathinfo($image,PATHINFO_EXTENSION);
 
-        move_uploaded_file($_FILES['image']['tmp_name'],$target_file);
+            //move directory
+            $target_file = "../../public/$imageName";
 
+            move_uploaded_file($_FILES['image']['tmp_name'],$target_file);
+
+            //store to db
+            $imageStore = "http://localhost:3000/public/$imageName";
+
+        }
+
+        
 
     }
 
-    //store to db
-    $imageStore = "http://localhost:3000/public/$imageName";
+    
 
 
     //create rules validation with request
