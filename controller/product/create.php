@@ -110,5 +110,4 @@ if ($method === 'POST') {
         "status" => 405,  
         "message" => "Method Not Allowed."  
     ]);  
-}  
-?>
+} 
