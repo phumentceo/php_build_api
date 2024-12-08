@@ -31,7 +31,7 @@ if($method === "DELETE"){
 
     $image = $product['image'];
     //localhost:3000/public/35454534564.jpg;
-    $imageDir = "../../public/". basename($image);
+    $imageDir = "../../public/".basename($image);
     if($image != ''){
         if(file_exists($imageDir)){
             unlink($imageDir);
